@@ -9,17 +9,24 @@ import adminRouter from "./routes/adminRoute.js"
 
 // app config
 const app = express()
+const cors = require("cors");
 const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
 
 // middlewares
 app.use(express.json())
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local patient/client
+      "http://localhost:5174", // local admin
+      "https://clinik-1-lakshay-dhalls-projects.vercel.app", // Vercel client
+      "https://clinik-three.vercel.app", // Vercel admin
+    ],
+    credentials: true,
+  })
+);
 
 
 // api endpoints
